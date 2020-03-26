@@ -10,8 +10,16 @@ from Zeitplan import app
 # Routes for Templates
 @app.route('/')
 @app.route('/Zeitplan')
-def genesys_v2():
-    return render_template('base.html')
+def zeitplan():
+    return render_template('getInfo.html')
+
+@app.route('/getData', methods=['GET', 'POST'])
+def getData():
+    if request.method=='POST':
+        print(request.form['ttInText'])
+        return render_template('getInfo.html')
+    else:
+        return render_template('error.html')
 
 
 # Routes for Responsive WebPages
