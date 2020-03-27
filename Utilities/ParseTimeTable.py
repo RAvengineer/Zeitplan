@@ -61,6 +61,15 @@ class ParseTimeTable():
         }
         self.days = ['']*7        
     
+    
+    def addDatesToDaysList(self, date):
+        dt = list(find_dates(date))[0]
+        self.days = ['']*7
+        for i in range(7):
+            self.days[dt.weekday()] = dt.strftime("%d %B %Y")
+            dt += timedelta(days=1)
+
+
     def readTT(self, data):
         data = list(filter(lambda a: a != '',[x.rstrip() for x in data.split('\n')]))
         """
