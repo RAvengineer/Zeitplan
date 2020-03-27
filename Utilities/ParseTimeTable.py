@@ -70,7 +70,7 @@ class ParseTimeTable():
             dt += timedelta(days=1)
 
 
-    def readTT(self, data):
+    def parseTT(self, data):
         data = list(filter(lambda a: a != '',[x.rstrip() for x in data.split('\n')]))
         """
         data -> '1', 'General (Semester)', 'STS2102 - Enhancing Problem Solving Skills - Soft Skill', '0 0 0 0 1', 'University Core', 'Regular', 'CH2019205000291', 'F1+TF1', 'AB1-408', 'SMART (APT) - ACAD', '01-Nov-2019 14:06', '02-Nov-2019', '- Manual', 'Registered and Approved', '2', ...
@@ -101,3 +101,18 @@ class ParseTimeTable():
                 popup = duration//10
                 parsedTimeTable.append([slot,title,location,description,duration,popup])
         return parsedTimeTable
+    
+
+    def convertTTtoEvents(self,data,date):
+        self.addDatesToDaysList(date)
+        parsed_data = list()
+        parsedTimeTable = self.parseTT(data)
+        for lecture in parsedTimeTable:
+            for indices in self.slot_details[lecture[0]]:
+                start_time = list(find_dates(self.days[indices[0]]+' '+self.start_times[indices[1]]))
+                if(len(start_time)>0):
+                    start_time = start_time[0]
+                else:
+                    return -1
+                parsed_data.append([start_time]+lecture[1:])
+        return parsed_data
