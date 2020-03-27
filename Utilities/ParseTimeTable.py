@@ -58,6 +58,7 @@ class ParseTimeTable():
             "L85+L86":[[6,2]],"L91+L92":[[6,7]],
             "L87+L88":[[6,4]],"L93+L94":[[6,9]],            
         }
+        self.days = ['']*7        
     
     def readTT(self, data):
         data = list(filter(lambda a: a != '',[x.rstrip() for x in data.split('\n')]))
