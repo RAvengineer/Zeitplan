@@ -2,7 +2,22 @@ from datefinder import find_dates
 from datetime import datetime,timedelta
 
 class ParseTimeTable():
+    '''
+    Parses the time-table provided in V-TOP and \n
+    returns list of lectures with list of details of respective lecture.\n
+    Details include:\n
+    course,faculty,slot,course_type,category,class_number,LTPJC\n
+    All of this will be parsed from raw text copied from the Time-Table page on V-TOP
+    '''
     def __init__(self):
+        '''
+        Constructor for ParseTimeTable\n
+        Initializes:
+            number_of_cols=14
+            "start_times" for each lecture
+            "slot_details" as the day and timing they belong to
+            "days" from Monday to Sunday
+        '''
         self.number_of_cols = 14
         self.start_times = (
             "8:00 AM","8:55 AM","9:50 AM","10:45 AM","11:40 AM","2:00 PM","2:55 PM","3:50 PM","4:45 PM","5:40 PM",
@@ -62,6 +77,14 @@ class ParseTimeTable():
     
     
     def addDatesToDaysList(self, date):
+        '''
+        Replaces the dates that belongs to their respective days\n
+        with the items in the list "days"\n
+        Parameters:
+            date: str
+        Returns:
+            NULL
+        '''
         dt = list(find_dates(date))[0]
         self.days = ['']*7
         for i in range(7):
@@ -70,6 +93,14 @@ class ParseTimeTable():
 
 
     def parseTT(self, data):
+        '''
+        Converts Raw data provided as text to a list of lectures\n
+        with details like slot,title,location,description,duration,popup\n
+        Parameters:
+            data: str
+        Returns:
+            list(list)
+        '''
         data = list(filter(lambda a: a != '',[x.rstrip() for x in data.split('\n')]))
         """
         data -> '1', 'General (Semester)', 'STS2102 - Enhancing Problem Solving Skills - Soft Skill', '0 0 0 0 1', 'University Core', 'Regular', 'CH2019205000291', 'F1+TF1', 'AB1-408', 'SMART (APT) - ACAD', '01-Nov-2019 14:06', '02-Nov-2019', '- Manual', 'Registered and Approved', '2', ...
@@ -103,6 +134,17 @@ class ParseTimeTable():
     
 
     def convertTTtoEvents(self,data,date):
+        '''
+        Converts the Time-Table provided in Raw Text to \n
+        list of Events, ready to be added as Events using Calendar API\n
+        Format of events:
+            datetime, title, location, description, duration, popup
+        Parameters:
+            data: str :- Raw Text Time-Table
+            date: str :- Start Date for the Events to be added
+        Returns:
+            list(list)
+        '''
         self.addDatesToDaysList(date)
         parsed_data = list()
         parsedTimeTable = self.parseTT(data)
