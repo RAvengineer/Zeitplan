@@ -3,7 +3,6 @@ from datetime import datetime,timedelta
 
 class ParseTimeTable():
     def __init__(self):
-        self.tt = dict()
         self.number_of_cols = 14
         self.start_times = (
             "8:00 AM","8:55 AM","9:50 AM","10:45 AM","11:40 AM","2:00 PM","2:55 PM","3:50 PM","4:45 PM","5:40 PM",
