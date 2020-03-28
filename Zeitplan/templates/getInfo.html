@@ -33,58 +33,63 @@
             </div>
         </div>
         <hr>
-        <!-- Color Picker -->
-        <div class="form-group col-12 col-md-6">
-            <label for="eventColorDummy">Event Color:</label>
-            <input class="btn circle m-1" id="eventColorDummy" name="eventColorDummy" disabled>
-            <input id="eventColor" name="eventColor" value="9" hidden>
-            <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <div class="dropdown-menu dropdown-menu-left">
-                <table class="table table-borderless">
-                    <tbody>
-                    <tr>
-                        <td class="circle m-1 mx-4" id="c1"></td>
-                        <td class="circle m-1 ml-3" id="c2"></td>
-                    </tr>
-                    <tr>
-                        <td class="circle m-1 mx-4" id="c3"></td>
-                        <td class="circle m-1 ml-3" id="c4"></td>
-                    </tr>
-                    <tr>
-                        <td class="circle m-1 mx-4" id="c5"></td>
-                        <td class="circle m-1 ml-3" id="c6"></td>
-                    </tr>
-                    <tr>
-                        <td class="circle m-1 mx-4" id="c7"></td>
-                        <td class="circle m-1 ml-3" id="c8"></td>
-                    </tr>
-                    <tr>
-                        <td class="circle m-1 mx-4" id="c9"></td>
-                        <td class="circle m-1 ml-3" id="c10"></td>
-                    </tr>
-                    <tr>
-                        <td class="circle m-1 mx-4" id="c11"></td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="form-group row">
+            <!-- Color Picker -->
+            <div class="form-group col-12 col-md-3">
+                <label for="eventColorDummy">Event Color:</label>
+                <input class="btn circle m-1" id="eventColorDummy" name="eventColorDummy" disabled>
+                <input id="eventColor" name="eventColor" value="9" hidden>
+                <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-left">
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <td class="circle m-1 mx-4" id="c1"></td>
+                            <td class="circle m-1 ml-3" id="c2"></td>
+                        </tr>
+                        <tr>
+                            <td class="circle m-1 mx-4" id="c3"></td>
+                            <td class="circle m-1 ml-3" id="c4"></td>
+                        </tr>
+                        <tr>
+                            <td class="circle m-1 mx-4" id="c5"></td>
+                            <td class="circle m-1 ml-3" id="c6"></td>
+                        </tr>
+                        <tr>
+                            <td class="circle m-1 mx-4" id="c7"></td>
+                            <td class="circle m-1 ml-3" id="c8"></td>
+                        </tr>
+                        <tr>
+                            <td class="circle m-1 mx-4" id="c9"></td>
+                            <td class="circle m-1 ml-3" id="c10"></td>
+                        </tr>
+                        <tr>
+                            <td class="circle m-1 mx-4" id="c11"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <!-- Recurring Event? -->
+            <!-- Recurring Event? -->
             <div class="row ml-1">
                 <!-- Recurring Event Switch -->
-                <div class="col-12 col-md-6 form-group custom-control custom-switch">
+                <div class="col-12 col-md-auto form-group custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="recurringEvent" name="recurringEvent" value="1">
                     <label class="custom-control-label" for="recurringEvent">Recurring Event</label>
-                    <small id="start_date_help" class="form-text text-muted">The date from which the Events will be added.</small>
+                    <small id="start_date_help" class="form-text text-muted">
+                        Should the events be recurring? If YES, then fill the End Date for the Recurring Events.<br>
+                        Basically, till which date should the timetable repeat the events.
+                    </small>
                 </div>
                 <!-- Recurring End Date -->
-                <div class="col-12 col-md-6 form-group" id="recurringEndDate">
+                <div class="col-12 col-md-auto form-group" id="recurringEndDate">
                     <label for="end_date">End Date for Recurring Events <span style="color: red;">*</span></label>
                     <input class="datepicker" id="end_date" name="end_date" width="276"  placeholder="mm/dd/yyyy" required/>
                 </div>
             </div>
+        </div>
         <div class="form-group"><button type="submit" class="btn btn-primary">Add Events</button>
     </form>
 {% endblock %}
