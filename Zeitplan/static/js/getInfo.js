@@ -14,6 +14,7 @@ for (let i = 1; i < 12; i++) {
 for (let i = 1; i < 12; i++) {
     var cid = "#c"+i;
     $(cid).on("click",function(){
-        console.log(i);
+        $('#eventColorDummy').css("background-color",eventColors[i-1]);
+        $("#eventColor").attr("value",i);
     });
 }
