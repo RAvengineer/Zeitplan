@@ -83,13 +83,22 @@ class ParseTimeTable():
         Parameters:
             date: str
         Returns:
-            NULL
+            -1 if Error, otherwise 0
         '''
-        dt = list(find_dates(date))[0]
+        try:
+            dt = list(find_dates(date))
+        except Exception as e:
+            print(str(e))
+            return -1
+        if(len(dt)==0):
+            print("Error in ParseTimeTable.py addDatesToDaysList() function:\nlength of possible dates list = 0")
+            return -1
+        dt = dt[0]
         self.days = ['']*7
         for i in range(7):
             self.days[dt.weekday()] = dt.strftime("%d %B %Y")
             dt += timedelta(days=1)
+        return 0
 
 
     def parseTT(self, data):
@@ -145,9 +154,15 @@ class ParseTimeTable():
         Returns:
             list(list)
         '''
-        self.addDatesToDaysList(date)
-        parsed_data = list()
-        parsedTimeTable = self.parseTT(data)
+        try:
+            if(self.addDatesToDaysList(date)==-1):
+                print("Error in PasreTimeTable.py convertTTtoEvents() function")
+                return -1
+            parsed_data = list()
+            parsedTimeTable = self.parseTT(data)
+        except Exception as e:
+            print(str(e))
+            return -1
         for lecture in parsedTimeTable:
             for indices in self.slot_details[lecture[0]]:
                 start_time = list(find_dates(self.days[indices[0]]+' '+self.start_times[indices[1]]))
