@@ -10,6 +10,11 @@ $('#start_date').datepicker({
 var eventColors = ['#a4bdfc','#7ae7bf','#dbadff','#ff887c','#fbd75b','#ffb878','#46d6db','#e1e1e1','#5484ed','#51b749','#dc2127',]
 
 function main(){
+    
+    // Default fields
+    $('#recurringEndDate').attr("hidden",'');
+    $('#end_date').attr("disabled",'');
+
     // Add background colors for <td> color circles
     for (let i = 1; i < 12; i++) {
         var cid = "#c"+i;
@@ -25,6 +30,16 @@ function main(){
         });
     }
 
+    // Toggle end_date field with respect to the status of the switch
+    $('#recurringEvent').on("click",function(){
+        if($(this).is(':checked')){
+            $('#recurringEndDate').removeAttr("hidden");
+            $('#end_date').removeAttr("disabled");
+        }else{
+            $('#recurringEndDate').attr("hidden",'');
+            $('#end_date').attr("disabled",'');
+        }
+    });
 }
 
 main();
