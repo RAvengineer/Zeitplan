@@ -12,6 +12,10 @@ ptt = ParseTimeTable()
 @app.route('/')
 @app.route('/Zeitplan')
 def zeitplan():
+    return render_template('home.html')
+
+@app.route('/getInfo')
+def getInfo():
     return render_template('getInfo.html')
 
 @app.route('/getData', methods=['GET', 'POST'])
