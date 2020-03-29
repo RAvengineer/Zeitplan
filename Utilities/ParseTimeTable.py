@@ -160,15 +160,15 @@ class ParseTimeTable():
                 return -1
             parsed_data = list()
             parsedTimeTable = self.parseTT(data)
+            for lecture in parsedTimeTable:
+                for indices in self.slot_details[lecture[0]]:
+                    start_time = list(find_dates(self.days[indices[0]]+' '+self.start_times[indices[1]]))
+                    if(len(start_time)>0):
+                        start_time = start_time[0]
+                    else:
+                        return -1
+                    parsed_data.append([start_time]+lecture[1:])
+            return parsed_data
         except Exception as e:
             print(str(e))
             return -1
-        for lecture in parsedTimeTable:
-            for indices in self.slot_details[lecture[0]]:
-                start_time = list(find_dates(self.days[indices[0]]+' '+self.start_times[indices[1]]))
-                if(len(start_time)>0):
-                    start_time = start_time[0]
-                else:
-                    return -1
-                parsed_data.append([start_time]+lecture[1:])
-        return parsed_data
