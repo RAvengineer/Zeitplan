@@ -6,24 +6,47 @@
     <div class="jumbotron">
         <img src="static/images/transparent_logo.png" alt="Logo" class="img-fluid d-inline-block">
         <!-- <h1 class="display-4">Hello, world!</h1> -->
-        <p class="lead mt-2">
-            <a href="https://en.wiktionary.org/wiki/Zeitplan">Zeitplan</a> is a German word, that means Timetable.<br>
-            A Timetable Management web app for <b>VITians</b>.<br>
-        </p>
+        <p class="lead mt-2">A Timetable Management web app for <b>VITians</b>.<br></p>
+        <a href="https://en.wiktionary.org/wiki/Zeitplan">Zeitplan</a> is a German word, that means Timetable.<br>
+        
         <hr class="my-4">
+        
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#whatModal">
+            What Zeitplan does?
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="whatModal" tabindex="-1" role="dialog" aria-labelledby="whatModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="whatModalTitle">What Zeitplan does?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    For all VITians, checking the timetable after each lecture is essential. Most commonly used method for the process is keeping a photograph of the timetable, and checking it after each class. But, this sounds tedious!
+                </p>
+                <p>
+                    So, how about you get notified about the next lecture just when a lecture ends. With 1.5 billion Google accounts world-wide, Google Calendar can be used for this purpose, instead of creating an app - which would be like re-inventing the wheels! And on top of that, the website won't ask you to add the slots and lectures manually! 
+                </p>
+                <p>
+                    All you have to do is to copy-paste the timetable on VTOP and few details about the events, and then all the lectures will be added to your Calendar Account as Events.
+                    Now, you will be able to see next lecture's details in your notification bar and popup, provided you have Google Calendar app installed.
+                    For more, you can use the Calendar Widget to get your lecture details on home screen in a more organised manner.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+        </div>
         <p>
-            For all VITians, checking the timetable after each lecture is essential. Most commonly used method for the process is keeping a photograph of the timetable, and checking it after each class. But, this sounds tedious!
-        </p>
-        <p>
-            So, how about you get notified about the next lecture just when a lecture ends. With 1.5 billion Google accounts world-wide, Google Calendar can be used for this purpose, instead of creating an app - which would be like re-inventing the wheels! And on top of that, the website won't ask you to add the slots and lectures manually! 
-        </p>
-        <p>
-            All you have to do is to copy-paste the timetable on VTOP and few details about the events, and then all the lectures will be added to your Calendar Account as Events.
-            Now, you will be able to see next lecture's details in your notification bar and popup, provide you have Google Calendar app installed.
-            For more, you can use the Calendar Widget to get your lecture details on home screen in a more organised manner.
-        </p>
-        <p>
-            <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <button class="btn btn-light mt-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 What to copy for Raw timetable text?
             </button>
         </p>
@@ -32,6 +55,6 @@
                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
             </div>
         </div>
-        <a class="btn btn-success" href="{{ url_for('getInfo') }}">Get Started</a>
+        <a class="btn btn-success mt-3" href="{{ url_for('getInfo') }}">Get Started</a>
     </div>
 {% endblock %}
