@@ -1,5 +1,6 @@
 # Imports
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google_auth_oauthlib.flow import InstalledAppFlow, json
+from google.oauth2.credentials import Credentials
 
 class googleCalendarAPI():
     def __init__(self):
@@ -20,3 +21,15 @@ class googleCalendarAPI():
     
     def encodeCredentials(self, creds):
         return creds.to_json().encode()
+    
+    def decodeCredentials(self, json_creds):
+        jcreds = json.loads(json_creds)
+        creds = Credentials(
+            token=jcreds['token'],
+            refresh_token=jcreds['refresh_token'],
+            token_uri=jcreds['token_uri'],
+            client_id=jcreds['client_id'],
+            client_secret=jcreds['client_secret'],
+            scopes=jcreds['scopes']
+        )
+        return creds
