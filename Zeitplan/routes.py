@@ -39,6 +39,7 @@ def getInfo():
                 creds = gca.generateAPIkey()
             # Add the new keys to the cookies
             resp.set_cookie('data',gca.encodeCredentials(creds))
+        gca.buildService(creds)
         return resp
     except Exception as e:
         print(f"Error in getInfo() in routes.py:\n{str(e)}\n")
