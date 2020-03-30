@@ -34,3 +34,4 @@ htmlcov/
 *.code-workspace
 
 # Extras
+Utilities/credentials.json
