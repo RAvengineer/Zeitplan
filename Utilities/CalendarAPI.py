@@ -1,4 +1,5 @@
 # Imports
+from apiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow, json
 from google.oauth2.credentials import Credentials
 
@@ -33,3 +34,6 @@ class googleCalendarAPI():
             scopes=jcreds['scopes']
         )
         return creds
+    
+    def buildService(self,creds):
+        self.service = build('calendar', 'v3', credentials=creds)
