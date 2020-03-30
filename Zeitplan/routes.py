@@ -1,12 +1,15 @@
-from flask import render_template, request, Response,jsonify
+from flask import render_template, request, Response,jsonify, make_response
 from Zeitplan import app
 from Utilities.ParseTimeTable import ParseTimeTable
+from Utilities.CalendarAPI import googleCalendarAPI
+from google.auth.transport.requests import Request
 
 # Variables
 
 
 # Objects/ Instances
 ptt = ParseTimeTable()
+gca = googleCalendarAPI()
 
 # Routes for Templates
 @app.route('/')
@@ -16,7 +19,21 @@ def zeitplan():
 
 @app.route('/getInfo')
 def getInfo():
-    return render_template('getInfo.html')
+    try:
+        resp = make_response(render_template('getInfo.html'))
+        creds = request.cookies.get('data',None)
+        if creds:
+            creds = gca.decodeCredentials(creds)
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                creds = gca.generateAPIkey()
+            resp.set_cookie('data',gca.encodeCredentials(creds))
+        return resp
+    except Exception as e:
+        print(f"Error in getInfo() in routes.py:\n{str(e)}\n")
+        return render_template('sww.html')
 
 @app.route('/getData', methods=['GET', 'POST'])
 def getData():
