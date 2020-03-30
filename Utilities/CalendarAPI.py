@@ -18,3 +18,5 @@ class googleCalendarAPI():
         except Exception as e:
             raise(Exception(f'Error in generateAPIkey of googleCalendarAPI creds creation:\n{str(e)}'))
     
+    def encodeCredentials(self, creds):
+        return creds.to_json().encode()
