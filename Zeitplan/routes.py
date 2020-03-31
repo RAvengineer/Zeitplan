@@ -11,6 +11,15 @@ from google.auth.transport.requests import Request
 ptt = ParseTimeTable()
 gca = googleCalendarAPI()
 
+# Helper Functions and Routes
+@app.route('/authorize')
+def authorize():
+    authorization_url, state = gca.getAuthorizationUrl(url_for('oauth2callback', _external=True))
+    resp = make_response(redirect(authorization_url))
+    # Store the state so the callback can verify the auth server response.
+    resp.set_cookie('state', state)
+    return resp
+
 @app.route('/oauth2callback')
 def oauth2callback():
     resp = make_response(redirect(url_for('getInfo')))
