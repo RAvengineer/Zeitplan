@@ -62,14 +62,7 @@ class googleCalendarAPI():
     
     def decodeCredentials(self, json_creds):
         jcreds = json.loads(json_creds)
-        creds = Credentials(
-            token=jcreds['token'],
-            refresh_token=jcreds['refresh_token'],
-            token_uri=jcreds['token_uri'],
-            client_id=jcreds['client_id'],
-            client_secret=jcreds['client_secret'],
-            scopes=jcreds['scopes']
-        )
+        creds = Credentials(**jcreds)
         return creds
     
     def buildService(self,creds):
