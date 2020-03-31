@@ -1,4 +1,4 @@
-from flask import render_template, request, Response,jsonify, make_response
+from flask import render_template, request, Response,jsonify, make_response, redirect, url_for
 from Zeitplan import app
 from Utilities.ParseTimeTable import ParseTimeTable
 from Utilities.CalendarAPI import googleCalendarAPI
@@ -10,6 +10,18 @@ from google.auth.transport.requests import Request
 # Objects/ Instances
 ptt = ParseTimeTable()
 gca = googleCalendarAPI()
+
+@app.route('/oauth2callback')
+def oauth2callback():
+    resp = make_response(redirect(url_for('getInfo')))
+    # Specify the state when creating the flow in the callback so that it can
+    # verified in the authorization server response.
+    state = request.cookies.get('state',None)
+
+    resp.set_cookie('data',gca.getCreds(
+        state,url_for('oauth2callback', _external=True),request.url))
+
+    return resp
 
 # Routes for Templates
 @app.route('/')
