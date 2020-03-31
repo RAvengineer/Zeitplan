@@ -44,22 +44,13 @@ def getInfo():
         resp = make_response(render_template('getInfo.html'))
         # Get creds from cookies
         creds = request.cookies.get('data',None)
-
+        # If creds not available, then authorize
+        if not creds:
+            return redirect('authorize')
         # Decode and retrive google.oauth2.credentials.Credentials object, 
         # if creds available in cookies
-        if creds:
-            creds = gca.decodeCredentials(creds)
-        
-        # If creds not avalaible in cookies or creds not valid
-        if not creds or not creds.valid:
-            # If creds available, and creds is expired and refresh_token is available
-            if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
-            else:
-                # Generate keys, if creds not available
-                creds = gca.generateAPIkey()
-            # Add the new keys to the cookies
-            resp.set_cookie('data',gca.encodeCredentials(creds))
+        creds = gca.decodeCredentials(creds)
+
         gca.buildService(creds)
         return resp
     except Exception as e:
