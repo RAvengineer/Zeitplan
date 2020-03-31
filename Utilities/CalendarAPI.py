@@ -73,4 +73,4 @@ class googleCalendarAPI():
         return creds
     
     def buildService(self,creds):
-        self.service = build('calendar', 'v3', credentials=creds)
+        self.service = build(API_SERVICE_NAME, API_VERSION, credentials=creds)
