@@ -74,3 +74,9 @@ class googleCalendarAPI():
     
     def buildService(self,creds):
         self.service = build(API_SERVICE_NAME, API_VERSION, credentials=creds)
+
+'''
+References:
+    https://gist.github.com/nikhilkumarsingh/8a88be71243afe8d69390749d16c8322
+    https://developers.google.com/identity/protocols/oauth2/web-server#example
+'''
