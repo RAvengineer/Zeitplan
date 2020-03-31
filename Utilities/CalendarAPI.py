@@ -38,6 +38,15 @@ class googleCalendarAPI():
             include_granted_scopes='true')
         return (authorization_url, state)
     
+    def getCreds(self, state, ruri, auth_resp):
+        flow = Flow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
+        flow.redirect_uri = ruri
+
+        # Use the authorization server's response to fetch the OAuth 2.0 tokens.
+        authorization_response = auth_resp
+        flow.fetch_token(authorization_response=authorization_response)
+        return self.encodeCredentials(flow.credentials)
+    
     def generateAPIkey(self):
         try:
             SCOPES = ['https://www.googleapis.com/auth/calendar.events']
