@@ -4,10 +4,12 @@ from google_auth_oauthlib.flow import InstalledAppFlow, json, Flow
 from google.oauth2.credentials import Credentials
 from datetime import timedelta
 from datefinder import find_dates
+from onetimepad import encrypt, decrypt
 
 # This variable specifies the name of a file that contains the OAuth 2.0
 # information for this application, including its client_id and client_secret.
 CLIENT_SECRETS_FILE = "/home/RAvengineer/Zeitplan/Utilities/client_secret.json"
+KEY_PATH = "/home/RAvengineer/Zeitplan/Utilities/geheimnis.key"
 
 # This OAuth 2.0 access scope allows for full read/write access to the
 # authenticated user's account and requires requests to use an SSL connection.
@@ -57,13 +59,20 @@ class googleCalendarAPI():
     
     def encodeCredentials(self, creds):
         try:
-            return creds.to_json().encode()
+            jcreds = creds.to_json()
+            with open(KEY_PATH,'r') as f:
+                s = f.readline()
+            jcreds = encrypt(jcreds,s)
+            return jcreds.encode()
         except Exception as e:
             raise Exception(f"Error in CalendarAPI.py: encodeCredentials(): {str(e)}")
     
     def decodeCredentials(self, json_creds):
         try:
-            jcreds = json.loads(json_creds)
+            with open(KEY_PATH,'r') as f:
+                s = f.readline()
+            screds = decrypt(json_creds,s)
+            jcreds = json.loads(screds)
             creds = Credentials(**jcreds)
             return creds
         except Exception as e:
