@@ -129,10 +129,25 @@ class googleCalendarAPI():
             return requestBody
         except Exception as e:
             raise Exception(f"Error in CalendarAPI.py: createRequestBody(): {str(e)}")
+    
+    def insertEvent(self, cid, event):
+        '''
+        Creates an event. Inserts the event in the given calendar.\n
+        Parameters:
+            cid: str :- Calender ID
+            event: dict
+        Returns:
+            dict of the event created
+        '''
+        try:
+            return self.service.events().insert(calendarId=cid, body=event).execute()
+        except Exception as e:
+            raise Exception(f"Error in CalendarAPI.py: insertEvent(): {str(e)}")
 
 
 '''
 References:
     https://gist.github.com/nikhilkumarsingh/8a88be71243afe8d69390749d16c8322
     https://developers.google.com/identity/protocols/oauth2/web-server#example
+    https://stackoverflow.com/questions/51883184/google-oauth2-not-issuing-a-refresh-token-even-with-access-type-offline
 '''
