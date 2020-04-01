@@ -159,4 +159,5 @@ References:
     https://gist.github.com/nikhilkumarsingh/8a88be71243afe8d69390749d16c8322
     https://developers.google.com/identity/protocols/oauth2/web-server#example
     https://stackoverflow.com/questions/51883184/google-oauth2-not-issuing-a-refresh-token-even-with-access-type-offline
+    https://www.tutorialspoint.com/cryptography_with_python/cryptography_with_python_quick_guide.htm
 '''
