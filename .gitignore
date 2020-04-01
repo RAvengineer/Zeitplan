@@ -36,3 +36,4 @@ htmlcov/
 # Extras
 Utilities/credentials.json
 Utilities/client_secret.json
+Utilities/geheimnis.key
