@@ -76,7 +76,7 @@ def getData():
         else:
             return render_template('error.html')
     except Exception as e:
-        print(str(e))
+        print(f'Error in routes.py: getData() => {str(e)}')
         return render_template('sww.html')
    
 
