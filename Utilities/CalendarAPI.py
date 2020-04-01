@@ -2,7 +2,8 @@
 from apiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow, json, Flow
 from google.oauth2.credentials import Credentials
-from datetime import datetime, timedelta
+from datetime import timedelta
+from datefinder import find_dates
 
 # This variable specifies the name of a file that contains the OAuth 2.0
 # information for this application, including its client_id and client_secret.
@@ -90,7 +91,7 @@ class googleCalendarAPI():
                 default = 10
             recur: boolean :- Is this recurring event?
                 default = False
-            until_dt: datetime obj :- End Date for Recurring Event
+            until_dt: str :- End Date for Recurring Event
                 default = None
             color: int [1-11] both inclusive :- Decides the color for the Event
                 default = 9
@@ -123,6 +124,7 @@ class googleCalendarAPI():
                 'colorId':colorId,
             }
             if(recur):
+                until_dt = list(find_dates(until_dt))[0]
                 requestBody['recurrence'] = ['RRULE:FREQ=WEEKLY;UNTIL='+until_dt.strftime("%Y%m%dT000000Z")]
             return requestBody
         except Exception as e:
