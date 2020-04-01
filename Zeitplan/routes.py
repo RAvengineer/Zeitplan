@@ -14,11 +14,15 @@ gca = googleCalendarAPI()
 # Helper Functions and Routes
 @app.route('/authorize')
 def authorize():
-    authorization_url, state = gca.getAuthorizationUrl(url_for('oauth2callback', _external=True))
-    resp = make_response(redirect(authorization_url))
-    # Store the state so the callback can verify the auth server response.
-    resp.set_cookie('state', state)
-    return resp
+    try:
+        authorization_url, state = gca.getAuthorizationUrl(url_for('oauth2callback', _external=True))
+        resp = make_response(redirect(authorization_url))
+        # Store the state so the callback can verify the auth server response.
+        resp.set_cookie('state', state)
+        return resp
+    except Exception as e:
+        print(f"Error in routes.py: authorize(): {str(e)}")
+        return render_template('sww.html')
 
 @app.route('/oauth2callback')
 def oauth2callback():
