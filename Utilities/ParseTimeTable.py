@@ -156,8 +156,7 @@ class ParseTimeTable():
         '''
         try:
             if(self.addDatesToDaysList(date)==-1):
-                print("Error in PasreTimeTable.py convertTTtoEvents() function")
-                return -1
+                raise(Exception("Error in addDatesToDaysList() function"))
             parsed_data = list()
             parsedTimeTable = self.parseTT(data)
             for lecture in parsedTimeTable:
@@ -166,9 +165,8 @@ class ParseTimeTable():
                     if(len(start_time)>0):
                         start_time = start_time[0]
                     else:
-                        return -1
+                        raise(Exception("Couldn't find match for start_time"))
                     parsed_data.append([start_time]+lecture[1:])
             return parsed_data
         except Exception as e:
-            print(str(e))
-            return -1
+            raise(Exception("Error in ParseTimeTable.py convertTTtoEvents():"+str(e)))
