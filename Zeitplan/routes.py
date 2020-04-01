@@ -26,15 +26,19 @@ def authorize():
 
 @app.route('/oauth2callback')
 def oauth2callback():
-    resp = make_response(redirect(url_for('getInfo')))
-    # Specify the state when creating the flow in the callback so that it can
-    # verified in the authorization server response.
-    state = request.cookies.get('state',None)
+    try:
+        resp = make_response(redirect(url_for('getInfo')))
+        # Specify the state when creating the flow in the callback so that it can
+        # verified in the authorization server response.
+        state = request.cookies.get('state',None)
 
-    resp.set_cookie('data',gca.getCreds(
-        state,url_for('oauth2callback', _external=True),request.url))
+        resp.set_cookie('data',gca.getCreds(
+            state,url_for('oauth2callback', _external=True),request.url))
 
-    return resp
+        return resp
+    except Exception as e:
+        print(f"Error in routes.py: oauth2callback(): {str(e)}")
+        return render_template('sww.html')
 
 # Routes for Templates
 @app.route('/')
