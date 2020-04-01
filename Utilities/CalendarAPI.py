@@ -21,31 +21,37 @@ class googleCalendarAPI():
         self.service = None
     
     def getAuthorizationUrl(self,ruri):
-        # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
-        flow = Flow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES)
+        try:
+            # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
+            flow = Flow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES)
 
-        # The URI created here must exactly match one of the authorized redirect URIs
-        # for the OAuth 2.0 client, which you configured in the API Console. If this
-        # value doesn't match an authorized URI, you will get a 'redirect_uri_mismatch'
-        # error.
-        flow.redirect_uri = ruri
+            # The URI created here must exactly match one of the authorized redirect URIs
+            # for the OAuth 2.0 client, which you configured in the API Console. If this
+            # value doesn't match an authorized URI, you will get a 'redirect_uri_mismatch'
+            # error.
+            flow.redirect_uri = ruri
 
-        authorization_url, state = flow.authorization_url(
-            # Enable offline access so that you can refresh an access token without
-            # re-prompting the user for permission. Recommended for web server apps.
-            access_type='offline',
-            # Enable incremental authorization. Recommended as a best practice.
-            include_granted_scopes='true')
-        return (authorization_url, state)
+            authorization_url, state = flow.authorization_url(
+                # Enable offline access so that you can refresh an access token without
+                # re-prompting the user for permission. Recommended for web server apps.
+                access_type='offline',
+                # Enable incremental authorization. Recommended as a best practice.
+                include_granted_scopes='true')
+            return (authorization_url, state)
+        except Exception as e:
+            raise Exception(f"Error in CalendarAPI.py: getAuthorizationUrl(): {str(e)}")
     
     def getCreds(self, state, ruri, auth_resp):
-        flow = Flow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
-        flow.redirect_uri = ruri
+        try:
+            flow = Flow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
+            flow.redirect_uri = ruri
 
-        # Use the authorization server's response to fetch the OAuth 2.0 tokens.
-        authorization_response = auth_resp
-        flow.fetch_token(authorization_response=authorization_response)
-        return self.encodeCredentials(flow.credentials)
+            # Use the authorization server's response to fetch the OAuth 2.0 tokens.
+            authorization_response = auth_resp
+            flow.fetch_token(authorization_response=authorization_response)
+            return self.encodeCredentials(flow.credentials)
+        except Exception as e:
+            raise Exception(f"Error in CalendarAPI.py: getCreds(): {str(e)}")
     
     def generateAPIkey(self):
         try:
@@ -58,15 +64,24 @@ class googleCalendarAPI():
             raise(Exception(f'Error in generateAPIkey of googleCalendarAPI creds creation:\n{str(e)}'))
     
     def encodeCredentials(self, creds):
-        return creds.to_json().encode()
+        try:
+            return creds.to_json().encode()
+        except Exception as e:
+            raise Exception(f"Error in CalendarAPI.py: encodeCredentials(): {str(e)}")
     
     def decodeCredentials(self, json_creds):
-        jcreds = json.loads(json_creds)
-        creds = Credentials(**jcreds)
-        return creds
+        try:
+            jcreds = json.loads(json_creds)
+            creds = Credentials(**jcreds)
+            return creds
+        except Exception as e:
+            raise Exception(f"Error in CalendarAPI.py: decodeCredentials(): {str(e)}")
     
     def buildService(self,creds):
-        self.service = build(API_SERVICE_NAME, API_VERSION, credentials=creds)
+        try:
+            self.service = build(API_SERVICE_NAME, API_VERSION, credentials=creds)
+        except Exception as e:
+            raise Exception(f"Error in CalendarAPI.py: buildService(): {str(e)}")
 
 '''
 References:
