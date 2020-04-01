@@ -59,22 +59,26 @@ def getInfo():
 
 @app.route('/getData', methods=['GET', 'POST'])
 def getData():
-    if request.method=='POST':
-        ttInText = request.form.get('ttInText',' ')
-        start_date = request.form.get('start_date',' ')
-        if(request.form.get('recurringEvent',False,type=bool)):
-            end_date = request.form.get('end_date',-1)
-        calendarId = request.form.get('calendarId',"primary")
-        if(calendarId==''):
-            calendarId = "primary"
-        lst = ptt.convertTTtoEvents(ttInText,start_date)
-        # print(lst) # Debugging
-        print(lst)
-        if(lst==-1):
-            return render_template('sww.html')
-        return render_template('getInfo.html')
-    else:
-        return render_template('error.html')
+    try:
+        if request.method=='POST':
+            ttInText = request.form.get('ttInText',' ')
+            start_date = request.form.get('start_date',' ')
+            if(request.form.get('recurringEvent',False,type=bool)):
+                end_date = request.form.get('end_date',-1)
+            calendarId = request.form.get('calendarId',"primary")
+            if(calendarId==''):
+                calendarId = "primary"
+            eventColor = request.form.get('eventColor',9,type=int)
+            lst = ptt.convertTTtoEvents(ttInText,start_date)
+            # print(lst) # Debugging
+            print(lst)
+            return render_template('getInfo.html')
+        else:
+            return render_template('error.html')
+    except Exception as e:
+        print(str(e))
+        return render_template('sww.html')
+   
 
 
 # Routes for Responsive WebPages
