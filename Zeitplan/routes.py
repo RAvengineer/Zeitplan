@@ -82,9 +82,12 @@ def getData():
             lectures = ptt.convertTTtoEvents(ttInText,start_date)
             # print(lst) # Debugging
             for lecture in lectures:
-                print(gca.createRequestBody(
-                    lecture[1],lecture[2],lecture[3],lecture[0],lecture[4],lecture[5],recurEvent,end_date,eventColor
-                ))
+                gca.insertEvent(
+                    calendarId,
+                    gca.createRequestBody(
+                        lecture[1],lecture[2],lecture[3],lecture[0],lecture[4],lecture[5],recurEvent,end_date,eventColor
+                    )
+                )
             return render_template('home.html')
         else:
             return render_template('error.html')
