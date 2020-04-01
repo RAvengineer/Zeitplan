@@ -2,6 +2,7 @@
 from apiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow, json, Flow
 from google.oauth2.credentials import Credentials
+from datetime import datetime, timedelta
 
 # This variable specifies the name of a file that contains the OAuth 2.0
 # information for this application, including its client_id and client_secret.
@@ -72,6 +73,61 @@ class googleCalendarAPI():
             self.service = build(API_SERVICE_NAME, API_VERSION, credentials=creds)
         except Exception as e:
             raise Exception(f"Error in CalendarAPI.py: buildService(): {str(e)}")
+    
+    def createRequestBody(self, title, location, desc, start_dt, duration, popup_duration=10, recur=False,until_dt=None,color=9):
+        '''
+        Creates the Request Body 'event' to be added into the calendar\n
+        The Recurring Event is default WEEKLY\n
+        TimeZone: 'Asia/Kolkata'\n
+        Parameters:
+            title: str :- Title of the Event
+            location: str :- Location of the Event
+            desc: str :- Description
+            start_dt: datetime obj :- Start Time of the Event
+            duration: int (in minutes) :- Duration of the Event
+            popup_duration:
+                int :- Notification Time(in minutes)
+                default = 10
+            recur: boolean :- Is this recurring event?
+                default = False
+            until_dt: datetime obj :- End Date for Recurring Event
+                default = None
+            color: int [1-11] both inclusive :- Decides the color for the Event
+                default = 9
+        Returns:
+            dict
+        '''
+        try:
+            start_time = start_dt
+            end_time = start_time + timedelta(minutes=duration)
+            timezone = 'Asia/Kolkata'
+            colorId = str(color)
+            requestBody = {
+                'summary': title,
+                'location': location,
+                'description': desc,
+                'start': {
+                    'dateTime': start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                    'timeZone': timezone,
+                },
+                'end': {
+                    'dateTime': end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                    'timeZone': timezone,
+                },
+                'reminders': {
+                    'useDefault': False,
+                    'overrides': [
+                        {'method': 'popup', 'minutes': popup_duration},
+                    ],
+                },
+                'colorId':colorId,
+            }
+            if(recur):
+                requestBody['recurrence'] = ['RRULE:FREQ=WEEKLY;UNTIL='+until_dt.strftime("%Y%m%dT000000Z")]
+            return requestBody
+        except Exception as e:
+            raise Exception(f"Error in CalendarAPI.py: createRequestBody(): {str(e)}")
+
 
 '''
 References:
