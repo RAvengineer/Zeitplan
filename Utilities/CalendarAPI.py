@@ -1,6 +1,6 @@
 # Imports
 from apiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow, json, Flow
+from google_auth_oauthlib.flow import json, Flow
 from google.oauth2.credentials import Credentials
 from datetime import timedelta
 from datefinder import find_dates

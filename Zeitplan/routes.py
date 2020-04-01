@@ -1,8 +1,7 @@
-from flask import render_template, request, Response,jsonify, make_response, redirect, url_for
+from flask import render_template, request, make_response, redirect, url_for
 from Zeitplan import app
 from Utilities.ParseTimeTable import ParseTimeTable
 from Utilities.CalendarAPI import googleCalendarAPI
-from google.auth.transport.requests import Request
 
 # Variables
 
