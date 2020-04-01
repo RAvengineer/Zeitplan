@@ -71,16 +71,21 @@ def getData():
         if request.method=='POST':
             ttInText = request.form.get('ttInText',' ')
             start_date = request.form.get('start_date',' ')
-            if(request.form.get('recurringEvent',False,type=bool)):
+            recurEvent = request.form.get('recurringEvent',False,type=bool)
+            end_date = None
+            if(recurEvent):
                 end_date = request.form.get('end_date',-1)
             calendarId = request.form.get('calendarId',"primary")
             if(calendarId==''):
                 calendarId = "primary"
             eventColor = request.form.get('eventColor',9,type=int)
-            lst = ptt.convertTTtoEvents(ttInText,start_date)
+            lectures = ptt.convertTTtoEvents(ttInText,start_date)
             # print(lst) # Debugging
-            print(lst)
-            return render_template('getInfo.html')
+            for lecture in lectures:
+                print(gca.createRequestBody(
+                    lecture[1],lecture[2],lecture[3],lecture[0],lecture[4],lecture[5],recurEvent,end_date,eventColor
+                ))
+            return render_template('home.html')
         else:
             return render_template('error.html')
     except Exception as e:
