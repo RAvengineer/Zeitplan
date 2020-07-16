@@ -17,13 +17,19 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 API_SERVICE_NAME = 'calendar'
 API_VERSION = 'v3'
 
+CALENDAR = {
+    'summary': 'Zeitplan',
+    'description': 'A Calendar created using Zeitplan for organizing Lecture schedule for VIT students.'
+    +'\nCheck https://ravengineer.pythonanywhere.com/Zeitplan for more info.',
+    'timeZone': 'Asia/Kolkata',
+}
+
 class googleCalendarAPI():
     def __init__(self):
         '''
         Constructor for googleCalendarAPI
         '''
         self.service = None
-        self.officialCalendarName = 'Zeitplan'
     
     def getAuthorizationUrl(self,ruri):
         try:
@@ -84,6 +90,28 @@ class googleCalendarAPI():
             self.service = build(API_SERVICE_NAME, API_VERSION, credentials=creds)
         except Exception as e:
             raise Exception(f"Error in CalendarAPI.py: buildService(): {str(e)}")
+    
+    def getZeitplanCalendarID(self):
+        '''
+        Creates a Secondary Calender for the user(if it doesn't exist)\n
+        and returns the calendarID of the created or existing Calendar named\n
+        as 'Zeitplan'
+
+        Returns:
+        --
+            calendarId: str
+        '''
+        try:
+            # Check if there exists a calendar named as officialCalendarName
+            calendar_list = self.service.calendarList().list().execute()
+            for calendar_list_entry in calendar_list['items']:
+                if(calendar_list_entry['summary']==CALENDAR['summary']):
+                    return calendar_list_entry['id']
+            # If it doesn't exist, then create one
+            created_calendar = service.calendars().insert(body=CALENDAR).execute()
+            return created_calendar['id']
+        except Exception as e:
+            raise Exception(f"Error in CalendarAPI.py: getZeitplanCalendarID(): {str(e)}")
     
     def createRequestBody(self, title, location, desc, start_dt, duration, popup_duration=10, recur=False,until_dt=None,color=9):
         '''
