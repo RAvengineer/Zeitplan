@@ -93,7 +93,10 @@ def getData():
     except Exception as e:
         print(f'Error in routes.py: getData() => {str(e)}')
         return render_template('sww.html')
-   
+
+@app.route('/privacyPolicy')
+def privacyPolicy():
+    return render_template('privacy_policy.html')
 
 
 # Routes for Responsive WebPages
