@@ -54,11 +54,6 @@ def getInfo():
         # If creds not available, then authorize
         if not creds:
             return redirect('authorize')
-        # Decode and retrive google.oauth2.credentials.Credentials object, 
-        # if creds available in cookies
-        creds = gca.decodeCredentials(creds)
-
-        gca.buildService(creds)
         return resp
     except Exception as e:
         print(f"Error in getInfo() in routes.py:\n{str(e)}\n")
@@ -67,6 +62,11 @@ def getInfo():
 @app.route('/getData', methods=['GET', 'POST'])
 def getData():
     try:
+        # Decode and retrive google.oauth2.credentials.Credentials object
+        creds = request.cookies.get('data',None)
+        creds = gca.decodeCredentials(creds)
+        gca.buildService(creds)
+
         if request.method=='POST':
             ttInText = request.form.get('ttInText',' ')
             start_date = request.form.get('start_date',' ')
@@ -74,9 +74,9 @@ def getData():
             end_date = None
             if(recurEvent):
                 end_date = request.form.get('end_date',-1)
-            calendarId = request.form.get('calendarId', gca.getZeitplanCalendarID())
+            calendarId = request.form.get('calendarId', '')
             if(calendarId==''):
-                calendarId = "primary"
+                calendarId = gca.getZeitplanCalendarID()
             eventColor = request.form.get('eventColor',9,type=int)
             lectures = ptt.convertTTtoEvents(ttInText,start_date)
             # print(lst) # Debugging
