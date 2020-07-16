@@ -108,7 +108,7 @@ class googleCalendarAPI():
                 if(calendar_list_entry['summary']==CALENDAR['summary']):
                     return calendar_list_entry['id']
             # If it doesn't exist, then create one
-            created_calendar = service.calendars().insert(body=CALENDAR).execute()
+            created_calendar = self.service.calendars().insert(body=CALENDAR).execute()
             return created_calendar['id']
         except Exception as e:
             raise Exception(f"Error in CalendarAPI.py: getZeitplanCalendarID(): {str(e)}")
