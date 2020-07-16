@@ -74,7 +74,7 @@ def getData():
             end_date = None
             if(recurEvent):
                 end_date = request.form.get('end_date',-1)
-            calendarId = request.form.get('calendarId',"primary")
+            calendarId = request.form.get('calendarId', gca.getZeitplanCalendarID())
             if(calendarId==''):
                 calendarId = "primary"
             eventColor = request.form.get('eventColor',9,type=int)
