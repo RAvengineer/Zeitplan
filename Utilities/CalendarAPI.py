@@ -13,7 +13,7 @@ KEY_PATH = "/home/RAvengineer/Zeitplan/Utilities/geheimnis.key"
 
 # This OAuth 2.0 access scope allows for full read/write access to the
 # authenticated user's account and requires requests to use an SSL connection.
-SCOPES = ['https://www.googleapis.com/auth/calendar.events']
+SCOPES = ['https://www.googleapis.com/auth/calendar']
 API_SERVICE_NAME = 'calendar'
 API_VERSION = 'v3'
 
@@ -23,6 +23,7 @@ class googleCalendarAPI():
         Constructor for googleCalendarAPI
         '''
         self.service = None
+        self.officialCalendarName = 'Zeitplan'
     
     def getAuthorizationUrl(self,ruri):
         try:
