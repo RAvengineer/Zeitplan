@@ -45,6 +45,11 @@ def oauth2callback():
 def zeitplan():
     return render_template('home.html')
 
+@app.route('/message/<title>&<messageText>')
+def message(title, messageText):
+    data = {'title': title, 'messageText': messageText,}
+    return render_template('message.html', data=data)
+
 @app.route('/getInfo')
 def getInfo():
     try:
@@ -87,7 +92,7 @@ def getData():
                         lecture[1],lecture[2],lecture[3],lecture[0],lecture[4],lecture[5],recurEvent,end_date,eventColor
                     )
                 )
-            return render_template('home.html')
+            return redirect('message/Success&Events added!')
         else:
             return render_template('error.html')
     except Exception as e:
