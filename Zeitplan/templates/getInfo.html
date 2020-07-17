@@ -8,7 +8,7 @@
 {% block title %}Inputs{% endblock %}
 
 {% block body %}
-    <form action="/getData" method="POST">
+    <form action="/getData" method="POST" id="getDataForm">
         <!-- Raw Time-Table Text -->
         <div class="form-group">
             <label for="ttInText">Raw Text from V-TOP <span style="color: red;">*</span></label>
@@ -90,7 +90,12 @@
                 </div>
             </div>
         </div>
-        <div class="form-group"><button type="submit" class="btn btn-primary">Add Events</button>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="addEventsButton">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="spinner" hidden></span>
+                <span id="addEventsButtonText">Add Events</span>
+            </button>
+        </div>
     </form>
 {% endblock %}
 

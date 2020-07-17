@@ -40,6 +40,13 @@ function main(){
             $('#end_date').attr("disabled",'');
         }
     });
+
+    // Show spinner and disable the submit button, when submitting the form
+    $('#getDataForm').submit(function () {
+        $('#spinner').removeAttr('hidden');
+        $('#addEventsButtonText').text('Adding...');
+        $('#addEventsButton').attr('disabled', '');
+    });
 }
 
 main();
