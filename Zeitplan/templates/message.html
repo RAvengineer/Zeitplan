@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Redirect the user to Homepage after 10 seconds -->
+    <meta http-equiv = "refresh" content = "10; url = {{ url_for('zeitplan') }}" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Zeitplan - {{ data.title }}</title>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron mt-5" style="text-align: center;">
+            <i class="fa fa-calendar-check-o" aria-hidden="true" style="font-size: 10rem;color: rgb(33, 221, 0);"></i>
+            <h1 class="display-4">{{ data.messageText }}</h1>
+            <p class="lead">Check your <a href="https://calendar.google.com/">Google Calendar</a> to verify the changes.</p>
+            <hr class="my-4">
+            <p>You will be redirected to the Homepage shortly.</p>
+            <a class="btn btn-primary btn-lg" href="{{ url_for('zeitplan') }}" role="button"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
