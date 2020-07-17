@@ -55,7 +55,7 @@
         </p>
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
-                <img class="img-fluid" src="static/images/raw_tt_demo.gif" alt="What to copy for Raw timetable text?">
+                <img class="img-fluid" src="static/images/raw_tt_demo.gif" alt="What to copy for Raw timetable text?" loading="lazy">
             </div>
         </div>
         <a class="btn btn-success mt-3" href="{{ url_for('getInfo') }}">Get Started</a>
@@ -67,3 +67,7 @@
         </button>
     </div>
 {% endblock %}
+
+<!-- References:
+        https://addyosmani.com/blog/lazy-loading/
+ -->
