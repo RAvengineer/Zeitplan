@@ -73,6 +73,8 @@ def getData():
         gca.buildService(creds)
 
         if request.method=='POST':
+            resp = make_response(redirect('message/Success&Events added!'))
+            # Add Events
             ttInText = request.form.get('ttInText',' ')
             start_date = request.form.get('start_date',' ')
             recurEvent = request.form.get('recurringEvent',False,type=bool)
@@ -92,7 +94,9 @@ def getData():
                         lecture[1],lecture[2],lecture[3],lecture[0],lecture[4],lecture[5],recurEvent,end_date,eventColor
                     )
                 )
-            return redirect('message/Success&Events added!')
+            # Save Calendar ID in cookies
+            resp.set_cookie('calendarId', calendarId)
+            return resp
         else:
             return render_template('error.html')
     except Exception as e:
