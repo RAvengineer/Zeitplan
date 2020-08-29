@@ -9,7 +9,10 @@ function main() {
         for (var i = 0; i < allCookies.length; i++) 
             document.cookie = allCookies[i] + "=;expires=" + new Date(0).toUTCString(); 
         console.log("Cookies cleared!");
-        $('#clearCookiesModal').modal('show')
+        $('#clearCookiesModal').modal('show');
+        setTimeout(() => {
+            document.location.href = '/Zeitplan';
+        }, 5000);
     });
 }
 
