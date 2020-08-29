@@ -2,9 +2,10 @@ from flask import render_template, request, make_response, redirect, url_for
 from Zeitplan import app
 from Utilities.ParseTimeTable import ParseTimeTable
 from Utilities.CalendarAPI import googleCalendarAPI
+from os import getenv
 
 # Variables
-
+ENVIRON_LOCALHOST = 'ZEITPLAN_LOCALHOST'
 
 # Objects/ Instances
 ptt = ParseTimeTable()
@@ -31,8 +32,15 @@ def oauth2callback():
         # verified in the authorization server response.
         state = request.cookies.get('state',None)
 
-        resp.set_cookie('data',gca.getCreds(
-            state,url_for('oauth2callback', _external=True),request.url))
+        # If the application is hosted locally, a different method is required for
+        # credentials retrieval.
+        # Get the localhost validation from ENVIRONMENT VARAIBLES.
+        if(getenv(ENVIRON_LOCALHOST) == '1'):
+            print("You are working on LocalHost!")
+            resp.set_cookie('data',gca.getCredsLocalhost())
+        else:
+            resp.set_cookie('data',gca.getCreds(
+                state,url_for('oauth2callback', _external=True),request.url))
 
         return resp
     except Exception as e:
@@ -113,5 +121,6 @@ def privacyPolicy():
 
 '''
 References:
-https://tedboy.github.io/flask/generated/generated/werkzeug.ImmutableMultiDict.get.html#werkzeug.ImmutableMultiDict.get
+    - https://tedboy.github.io/flask/generated/generated/werkzeug.ImmutableMultiDict.get.html#werkzeug.ImmutableMultiDict.get
+    - Environment Varialbles:  https://able.bio/rhett/how-to-set-and-get-environment-variables-in-python--274rgt5
 '''
