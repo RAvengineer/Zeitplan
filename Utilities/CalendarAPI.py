@@ -1,6 +1,6 @@
 # Imports
 from apiclient.discovery import build
-from google_auth_oauthlib.flow import json, Flow
+from google_auth_oauthlib.flow import InstalledAppFlow, json, Flow
 from google.oauth2.credentials import Credentials
 from datetime import timedelta
 from datefinder import find_dates
@@ -51,6 +51,19 @@ class googleCalendarAPI():
             return (authorization_url, state)
         except Exception as e:
             raise Exception(f"Error in CalendarAPI.py: getAuthorizationUrl(): {str(e)}")
+    
+    def getCredsLocalhost(self):
+        '''
+        Registers the user with the Google Calendar API on the Localhost and 
+        returns the credentials unique for each user. 
+        The credentials returned is encoded.
+        '''
+        try:
+            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES)
+            creds = flow.run_local_server(port=7310)
+            return self.encodeCredentials(creds)
+        except Exception as e:
+            raise(Exception(f'Error in CalendarAPI.py: getCredsLocalhost(): {str(e)}'))
     
     def getCreds(self, state, ruri, auth_resp):
         try:
