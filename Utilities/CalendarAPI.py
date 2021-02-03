@@ -175,7 +175,7 @@ class googleCalendarAPI():
                 'colorId':colorId,
             }
             if(recur):
-                until_dt = list(find_dates(until_dt))[0]
+                until_dt = list(find_dates(until_dt))[0] + timedelta(days=1)
                 requestBody['recurrence'] = ['RRULE:FREQ=WEEKLY;UNTIL='+until_dt.strftime("%Y%m%dT000000Z")]
             return requestBody
         except Exception as e:
