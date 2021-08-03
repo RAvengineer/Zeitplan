@@ -2,7 +2,7 @@ cachetools==4.0.0
 certifi==2019.11.28
 chardet==3.0.4
 click==7.1.1
-datefinder==0.7.0
+datefinder==0.7.1
 Flask==1.1.1
 google-api-core==1.16.0
 google-api-python-client==1.8.0
