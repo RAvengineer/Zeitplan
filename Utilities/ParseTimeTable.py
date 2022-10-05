@@ -20,64 +20,22 @@ class ParseTimeTable():
         '''
         self.number_of_cols = 14
         self.thoery_duration = 50
-        self.lab_duration = 100
         self.start_times = (
             # '08:00', '08:55', '09:50', '10:45', '11:40', '12:35', '14:00', '14:55', '15:50', '16:50', '17:40', '18:35',
-            '08:00 AM', '08:55 AM', '09:50 AM', '10:45 AM', '11:40 AM', '12:35 PM', '02:00 PM', '02:55 PM', '03:50 PM', '04:45 PM', '05:40 PM', '06:35 PM',
+            '08:30 AM', '10:05 AM', '11:40 AM', '13:15 PM', '14:50 PM', '16:25 PM', '18:00 PM',
         )
         # day_index: 0-6 where 0 => Monday
         # "slot":[[day_index,start_time_index],]
         self.slot_details = {
             # Theory
-            "A1":[[0,0],[2,1]],"A2":[[0,6],[2,7]],
-            "B1":[[1,0],[3,1]],"B2":[[1,6],[3,7]],
-            "C1":[[2,0],[4,1]],"C2":[[2,6],[4,7]],
-            "D1":[[3,0],[0,2]],"D2":[[3,6],[0,8]],
-            "E1":[[4,0],[1,2]],"E2":[[4,6],[1,8]],
-            "F1":[[0,1],[2,2]],"F2":[[0,7],[2,8]],
-            "G1":[[1,1],[3,2]],"G2":[[1,7],[3,8]],
-            "TA1":[[4,2]],"TA2":[[4,8]],
-            "TB1":[[0,3]],"TB2":[[0,9]],
-            "TC1":[[1,3]],"TC2":[[1,9]],
-            "TD1":[[2,3]],"TD2":[[2,9]],
-            "TE1":[[3,3]],"TE2":[[3,9]],
-            "TF1":[[4,3]],"TF2":[[4,9]],
-            "TG1":[[0,4]],"TG2":[[0,10]],
-            "TAA1":[[1,4]],"TAA2":[[1,10]],
-            "TBB1":[[2,4]],"TBB2":[[2,10]], # I know TBB1 is Extramural, I'm just playing safe!
-            "TCC1":[[3,4]],"TCC2":[[3,10]],
-            "TDD1":[[4,4]],"TDD2":[[4,10]],
-            "V8":[[5,0]],"V10":[[6,0]],
-            "W21":[[5,9],[6,9]],"W22":[[5,10],[6,10]],
-            "X11":[[5,1],[6,3]],"X12":[[5,2],[6,4]],
-            "Y11":[[5,3],[6,1]],"Y12":[[5,4],[6,2]],
-            "X21":[[5,6],[6,8]],"Y21":[[6,6],[5,8]],
-            "Z21":[[5,7],[6,7]],
-            "S1":[[1,11]], "S2":[[3,11]],   # Added after WIN 20-21 TimeTable revision
-            # Lab
-            "L1+L2":[[0,0]],"L31+L32":[[0,6]],
-            "L3+L4":[[0,2]],"L33+L34":[[0,8]],
-            "L5+L6":[[0,4]],"L35+L36":[[0,10]],
-            "L7+L8":[[1,0]],"L37+L38":[[1,6]],
-            "L9+L10":[[1,2]],"L39+L40":[[1,8]],
-            "L11+L12":[[1,4]],"L41+L42":[[1,10]],
-            "L13+L14":[[2,0]],"L43+L44":[[2,6]],
-            "L15+L16":[[2,2]],"L45+L46":[[2,8]],
-            "L17+L18":[[2,4]],"L47+L48":[[2,10]],
-            "L19+L20":[[3,0]],"L49+L50":[[3,6]],
-            "L21+L22":[[3,2]],"L51+L52":[[3,8]],
-            "L23+L24":[[3,4]],"L53+L54":[[3,10]],
-            "L25+L26":[[4,0]],"L55+L56":[[4,6]],
-            "L27+L28":[[4,2]],"L57+L58":[[4,8]],
-            "L29+L30":[[4,4]],"L59+L60":[[4,10]],
-            "L71+L72":[[5,0]],"L77+L78":[[5,6]],
-            "L73+L74":[[5,2]],"L79+L80":[[5,8]],
-            "L75+L76":[[5,4]],"L81+L82":[[5,10]],
-            "L83+L84":[[6,0]],"L89+L90":[[6,6]],
-            "L85+L86":[[6,2]],"L91+L92":[[6,8]],
-            "L87+L88":[[6,4]],"L93+L94":[[6,10]],           
+            "A11":[[0,0]],"A12":[[2,0]],"A13":[[4,0]],"A14":[[5,0]],"A21":[[0,3]],"A22":[[2,3]],"A23":[[4,3]],
+            "B11":[[0,1]],"B12":[[2,1]],"B13":[[4,1]],"B14":[[5,1]],"B21":[[0,5]],"B22":[[2,5]],"B23":[[3,4]],
+            "C11":[[0,2]],"C12":[[2,2]],"C13":[[4,2]],"C14":[[5,2]],"C21":[[0,6]],"C22":[[2,6]],"C23":[[1,4]],
+            "D21":[[1,3]],"D22":[[3,3]],"D23":[[4,6]],
+            "E11":[[1,1]],"E12":[[3,1]],"E13":[[0,4]],
+            "F11":[[1,2]],"F12":[[3,2]],"F13":[[2,4]],
         }
-        self.days = ['']*7        
+        self.days = ['']*7       
     
     
     def addDatesToDaysList(self, date):
@@ -123,24 +81,19 @@ class ParseTimeTable():
             course_code, course, course_type = data[2].split(" - ")
             LTPJC = data[3]
             category = data[4]
-            class_number = data[6]
-            slots = [data[7]]
-            if(course_type!="Embedded Lab"):
-                slots = data[7].split('+')
-            venue = data[8]
-            faculty = data[9]
+            class_number = data[5]
+            slots = [data[6]]
+            slots = data[6].split('+')
+            venue = data[7]
+            faculty = data[8]
             data = data[self.number_of_cols:]
             # Avoid Projects as they have the same slot as Theory and causes problem later
             # LazyProgrammer :P
-            if(course_type=="Embedded Project"):
-                continue
             for slot in slots:
                 title = course_code
                 location = venue
                 description = "\n".join([course,faculty,"Slot: "+slot,course_type,category,"Class Number: "+class_number,"L T P J C",LTPJC,])
                 duration = self.thoery_duration
-                if(slot[0]=='L'):
-                    duration = self.lab_duration
                 popup = duration//10
                 parsedTimeTable.append([slot,title,location,description,duration,popup])
         return parsedTimeTable
